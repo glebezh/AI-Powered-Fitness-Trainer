@@ -8,7 +8,7 @@ Features:
 
 ### How to access
 You can either run the application locally or access the hosted version online:
-* Hosted Version: 
+* Hosted Version: https://ai-fitness-trainer.streamlit.app/
 
 
 ### Installation Instructions (For Local Setup)
