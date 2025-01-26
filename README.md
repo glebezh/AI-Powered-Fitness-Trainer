@@ -1,6 +1,6 @@
 # AI-Powered-Fitness-Trainer
 
-A simple AI-powered fitness trainer built using Streamlit that can analyze exercises like squats, bicep curls, lateral raises, and pushups.
+A simple AI-powered fitness trainer built using Streamlit, OpenCV and Mediapipse Pose that can analyze exercises like squats, bicep curls, lateral raises, and pushups.
 
 Features:
 * Real-time feedback as you perform exercises.
