@@ -19,7 +19,7 @@ mp_pose = mp.solutions.pose
 
 # UI and setting wide page layout
 st.set_page_config(layout="wide")
-st.title("AI Powered Gym Coach Assistant")
+st.title("AI Powered Fitness Trainer")
 st.sidebar.title("Workout Options", )
 
 # Sidebar content for selecting workout and other options
@@ -292,3 +292,4 @@ if st.session_state.run_camera:
             FRAME_WINDOW.image(frame_with_border, channels="BGR")
 
     cap.release()
+    
