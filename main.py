@@ -1,15 +1,17 @@
-import streamlit as st
 import cv2
+import streamlit as st
 import mediapipe as mp
 import numpy as np
 
 # Importing necessary functions
-from Utilities.calculate_angle import calculate_angle
+from streamlit_webrtc import webrtc_streamer
 from Utilities.tracking_overlay import tracking_overlay
+from Utilities.available_cameras import get_available_cameras
 from Exercises.squats import process_squat_angle
 from Exercises.laterals import process_laterals_angle
 from Exercises.pushups import process_pushup_angle
 from Exercises.bicepcurls import process_bicepcurls_angle
+
 
 # Creating variables
 mp_drawing = mp.solutions.drawing_utils
@@ -20,11 +22,10 @@ st.set_page_config(layout="wide")
 st.title("AI Powered Gym Coach Assistant")
 st.sidebar.title("Workout Options", )
 
-# Sidebar content
+# Sidebar content for selecting workout and other options
 workout = st.sidebar.selectbox("Choose an Exercise", ["Lateral Raises", "Pushups", "Bicep Curls", "Squats"])
 reps_goal = st.sidebar.slider("Set Reps Goal", 1, 50, 10)
 sets_goal = st.sidebar.slider("Set Sets Goal", 1, 5, 3)
-
 
 if workout == "Squats":
     st.sidebar.markdown("**Squats:** A great lower body exercise to build strength.")
@@ -35,40 +36,55 @@ elif workout == "Bicep Curls":
 elif workout == "Lateral Raises":
     st.sidebar.markdown("**Lateral Raises:** A great exercises to target your lateral deltoids.")
 
-# Create an empty container to hold the button
-sidebar_container = st.sidebar.container()
+# Get available camera sources
+available_cameras = get_available_cameras()
 
-# Add some space to ensure the button is centered
+# Initialize camera selection in session state
+if "camera_index" not in st.session_state:
+    st.session_state.camera_index = 0 
+
+# Select camera in the sidebar and set session state to variable
+camera_index = st.sidebar.selectbox("Select Camera Source", available_cameras, index=st.session_state.camera_index, help="Select the camera source")
+st.session_state.camera_index = camera_index
+
+# Create container for the sidebar
+sidebar_container = st.sidebar.container()
 sidebar_container.write("")
 
-# Center the button using columns
-col1, col2, col3 = sidebar_container.columns([1, 2, 1])  # Create three columns
+col1, col2, col3 = sidebar_container.columns([1, 2, 1]) 
 with col2:
     run_camera = st.button("I'm ready to go!")
 
 container = st.empty()
 
-# If application not started, then show instructions
 if not run_camera:
+    st.session_state.run_camera = False 
+
+# Button to toggle the camera
+if run_camera:
+    st.session_state.run_camera = True
+
+# If application not started, then show instructions
+if not st.session_state.run_camera:
     container.markdown("""
     Welcome to the AI-powered gym coach assistant! Let's get started.
     - Firstly, select your exercise.
-    - Next, select reps and reps.
+    - Next, select reps and sets.
     - Finally, click on the confirm button to start the workout.
     - The AI will evaluate your exercise performance!
     """)
 
-# If button pressed, start video capture and initialise the model
-if run_camera:
 
-    # Initialize Mediapipe Pose model and set variables
-    st.markdown("YOU!")
+# If button pressed, start video capture and initialise the model
+if st.session_state.run_camera:
+    
+    # Initialize necessary variables and selected camera
     reps = 0
     sets = 0
     stage = None
     active_side = "right"
     feedback = ""
-    cap = cv2.VideoCapture(0)
+    cap = cv2.VideoCapture(st.session_state.camera_index)
     cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)
     cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 720)
     FRAME_WINDOW = st.image([])
@@ -80,6 +96,7 @@ if run_camera:
         st.markdown("My Progress")
     with col2:
         progress = st.progress(reps/reps_goal)
+
     
     # Initialise the model with complexity 1
     with mp_pose.Pose(min_detection_confidence=0.5, min_tracking_confidence=0.5, model_complexity=1) as pose:
@@ -272,6 +289,6 @@ if run_camera:
             frame_with_border = cv2.copyMakeBorder(frame, 5, 5, 5, 5, cv2.BORDER_CONSTANT, value=(0,0,0))
 
             # Image = generated frame with border
-            FRAME_WINDOW.image(frame_with_border, channels="BGR", use_container_width=True)
+            FRAME_WINDOW.image(frame_with_border, channels="BGR")
 
     cap.release()
