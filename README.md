@@ -24,9 +24,6 @@ streamlit run main.py
 ## Bicep Curl Demo
 ![](https://github.com/glebezh/AI-Powered-Fitness-Trainer/blob/main/BicepCurlDemo.gif)
 
-## Not in Frame
-![](https://github.com/glebezh/AI-Powered-Fitness-Trainer/blob/main/NotInFrame.png)
-
 ## Current Known Issues
 - Model struggles with lateral raises 
 
