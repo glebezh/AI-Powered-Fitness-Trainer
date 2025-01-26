@@ -6,12 +6,12 @@ Features:
 * Real-time feedback as you perform exercises.
 * Tracks reps and sets to monitor your progress.
 
-### How to access
+## How to access
 You can either run the application locally or access the hosted version online:
 * Hosted Version: https://ai-fitness-trainer.streamlit.app/ **Not Currently Functional **
 
 
-### Installation Instructions (For Local Setup)
+## Installation Instructions (For Local Setup)
 
 After unzipping the file `AI-Powered-Fitness-Trainer.zip` execute the following command in your terminal
 ```
@@ -21,10 +21,10 @@ Next execute the following in your terminal
 ```
 streamlit run main.py
 ```
-### Bicep Curl Demo
+## Bicep Curl Demo
 ![](https://github.com/glebezh/AI-Powered-Fitness-Trainer/blob/main/BicepCurlDemo.gif)
 
-# Current Known Issues
+## Current Known Issues
 - Model struggles with lateral raises 
 
 
