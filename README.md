@@ -21,5 +21,6 @@ Next execute the following in your terminal
 ```
 streamlit run main.py
 ```
-
+### Bicep Curl Demo
+https://github.com/glebezh/AI-Powered-Fitness-Trainer/blob/main/BicepCurlDemo.gif
 
