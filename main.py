@@ -19,7 +19,7 @@ mp_pose = mp.solutions.pose
 
 # UI and setting wide page layout
 st.set_page_config(layout="wide")
-st.title("AI Powered Fitness Trainer")
+st.title("AI-Powered Fitness Trainer")
 st.sidebar.title("Workout Options", )
 
 # Sidebar content for selecting workout and other options
@@ -67,7 +67,7 @@ if run_camera:
 # If application not started, then show instructions
 if not st.session_state.run_camera:
     container.markdown("""
-    Welcome to the AI-powered gym coach assistant! Let's get started.
+    Welcome to the AI-Powered Fitness Trainer! Let's get started.
     - Firstly, select your exercise.
     - Next, select reps and sets.
     - Finally, click on the confirm button to start the workout.
